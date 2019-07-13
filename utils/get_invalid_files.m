@@ -1,4 +1,4 @@
-function [missing_file_names] = get_invalid_files(file_path_resolver, file_name_resolver, params)
+function [missing_file_names, missing_mfdfa_data_names] = get_invalid_files(file_path_resolver, file_name_resolver, params)
 missing_file_names = {};
 missing_file_counter = 1;
 
