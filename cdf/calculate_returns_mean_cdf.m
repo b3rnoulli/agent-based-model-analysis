@@ -5,7 +5,7 @@ if ~exist('save_single_results','var')
 end
 
 number_of_bins = 101;
-range = [0.1 50];
+range = [0.1 100];
 result.x=exp(linspace(log(range(1)),log(range(2)),number_of_bins));
 result.F = zeros(length(params), length(result.x)-1);
 
@@ -18,7 +18,10 @@ for iterator=1:length(params)
     fprintf('[calculate_mean_cdf] Calculating mean cdf for file %s \n',file_name);
     data = load([file_path, file_name,'.mat']);
     
-    validate_property_exists(data, 'returns');
+    if ~check_property_exists(data, 'returns')
+       data.returns = zscore(diff(data.mag)); 
+       save([file_path, file_name,'.mat'],'-struct','data');
+    end
     
     [result.x, result.F(iterator,:)] = cdf(abs(data.returns), range, number_of_bins);
     
@@ -31,7 +34,6 @@ for iterator=1:length(params)
 end
 
 result.F = mean(result.F);
-
 
 params_for_mean = params(1);
 params_for_mean.execution='mean';

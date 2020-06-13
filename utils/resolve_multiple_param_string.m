@@ -7,6 +7,8 @@ if (ischar(values) || isnumeric(values)) && length(values) == 1
     result = num2str(values);
 elseif iscell(values) && length(values) == 1
     result = num2str(values{1});
+elseif ~iscell(values) && length(values) ~= 1
+    result = [num2str(values(1)),'-',num2str(values(end))];
 else
     result = [num2str(values{1}),'-',num2str(values{end})];
 end

@@ -1,4 +1,4 @@
-function [f] = plot_cdf(f, file_path_resolver, file_name_resolver, display_name_resolver, params, plot_properties, reference_params)
+function [f, distribution_data] = plot_cdf(f, file_path_resolver, file_name_resolver, display_name_resolver, params, plot_properties, reference_params)
 
 if ~exist('plot_properties','var') || isempty(plot_properties)
     plot_properties = get_default_plot_properties();
@@ -12,8 +12,18 @@ for iterator=1:length(params)
     file_path = file_path_resolver(param_array);
     
     data = load([file_path, file_name,'-cdf.mat']);
-    loglog(data.x(1,:),1-data.F(1,:),'LineWidth',plot_properties.line_width,'color',plot_properties.colors{iterator},'Marker',plot_properties.markers{iterator},...
-        'DisplayName',display_name_resolver(param_array), 'MarkerSize', plot_properties.marker_size,'MarkerFaceColor', plot_properties.colors{iterator});
+    
+    if size(data.x,1) ==1
+        loglog(data.x(1,:),1-data.F(1,:),'LineWidth',plot_properties.line_width,'color',plot_properties.colors{iterator},'Marker',plot_properties.markers{iterator},...
+            'DisplayName',display_name_resolver(param_array), 'MarkerSize', plot_properties.marker_size,'MarkerFaceColor', plot_properties.colors{iterator});
+    else
+        for i=1:size(data.x,1)
+            loglog(data.x(i,:),1-data.F(i,:),'LineWidth',plot_properties.line_width,'color',plot_properties.colors{iterator},'Marker',plot_properties.markers{iterator},...
+                'DisplayName',[display_name_resolver(param_array),' ',num2str(i)], 'MarkerSize', plot_properties.marker_size,'MarkerFaceColor', plot_properties.colors{iterator});
+        end
+    end
+    
+    
     hold on;
 end
 
@@ -35,7 +45,7 @@ set_default_plot_properties(gca);
 xlim([0.2,100]);
 ylim([10^-6,1]);
 xlabel('$|r(t)|$')
-ylabel('$F(|r(t)|)$');
+ylabel('1-$F(|r(t)|)$');
 legend show
 title('1-CDF')
 end

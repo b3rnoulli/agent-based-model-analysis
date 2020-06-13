@@ -13,7 +13,7 @@ for iterator=1:length(params)
     
     fprintf('[calculate_mean_autocorrelation] Calculating mean acf for file %s \n',file_name);
     
-    data = load([file_path, file_name,'-',num2str(param_array.execution),'.mat']);
+    data = load([file_path, file_name,'.mat']);
     
     validate_property_exists(data, 'returns');
     
@@ -27,7 +27,7 @@ for iterator=1:length(params)
     if save_single_results
         volatility = volatility_acf;
         returns = returns_acf;
-        save([file_path, file_name,'-',num2str(param_array.execution),'-acf.mat'],'volatility','returns')
+        save([file_path, file_name,'-acf.mat'],'volatility','returns')
     end
     
     mean_volatility_acf(iterator,:) = volatility_acf;

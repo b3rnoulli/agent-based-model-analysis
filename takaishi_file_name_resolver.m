@@ -13,6 +13,10 @@ if check_property_exists(params,'j')
     file_name = [file_name,get_j_file_string(params.j)];
 end
 
+if check_property_exists(params,'execution')
+    file_name = [file_name,'-',num2str(params.execution)];
+end
+
 end
 
 

@@ -4,7 +4,7 @@ if ~check_property_exists(params,'datasource')
     params.datasource='DEFAULT';
 end
 
-root_path = [get_root_data_path(params.datasource),'takaishi-results/'];
+root_path = [get_root_data_path(params.datasource)];
 suffix='';
 
 if check_property_exists(params,'beta')

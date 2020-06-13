@@ -21,7 +21,7 @@ if params_index == 1
 end
 
 for i=1:length(field_values)
-    values_struct = append_field(values_struct,field_name, field_values{i});
+    values_struct = append_field(values_struct, field_name, field_values{i});
     params(params_index) = values_struct;
     params_index = params_index +1;
 end

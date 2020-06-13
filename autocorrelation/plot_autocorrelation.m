@@ -1,10 +1,8 @@
-function plot_autocorrelation(file_path_resolver, file_name_resolver, display_name_resolver, params, save_plot)
+function [f]=plot_autocorrelation(f, file_path_resolver, file_name_resolver, display_name_resolver, params, save_plot)
 
 if ~exist('save_plot','var')
     save_plot = false;
 end
-
-f = figure('units','normalized','position',[.05 .05 .55 .75]);
 
 for iterator=1:length(params)
     param_array = params(iterator);
@@ -13,7 +11,7 @@ for iterator=1:length(params)
     file_name = file_name_resolver(param_array);
     file_path = file_path_resolver(param_array);
     
-    acf = load([file_path, file_name,'-',num2str(param_array.execution),'-acf.mat']);
+    acf = load([file_path, file_name,'-acf.mat']);
     
     validate_property_exists(acf, 'volatility');
     loglog(acf.volatility,'LineWidth',2,'DisplayName',display_name_resolver(param_array));

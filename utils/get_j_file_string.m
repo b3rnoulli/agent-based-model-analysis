@@ -1,5 +1,7 @@
 function [result] = get_j_file_string(j)
 result = '-';
+
+
 for i=1:length(j)
     if i~=1
        result = [result,'-']; 
